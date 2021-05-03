@@ -2,7 +2,7 @@
 - 👀 I’m interested in exploring Medical Computer Vision.
 - 🌱 I’m currently learning Python.
 - 💞️ I’m looking to collaborate on exciting projects in Compter Vision, Image Analysis and Processing.
-- 📫 How to reach me -> harieshrm@gmail.com 
+- 📫 How to reach me -> harieshrm.pgdm20@iihmrbangalore.edu.in
 - I love to implement simple solutions to solve complex and crazy problems.
 - ENVISION THE FUTURE IN VISION
 
