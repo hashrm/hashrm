@@ -1,5 +1,5 @@
-## ->                                               ENVISION THE FUTURE IN VISION
-# Hariesh's Git Base
+## ->  Welcome to Hash's Open Code Base
+### HASH-RM alais Hariesh Ramanathan M 
 - 👋 Hi, I’m @hashrm
 - 👀 I’m interested in exploring Medical Computer Vision.
 - 🌱 I’m currently learning Python.
