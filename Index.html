@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <base target="_top">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+      body {
+        font-family: 'Montserrat', sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f4f4f4;
+      }
+      .header {
+        background-color: rgb(99, 5, 208);
+        color: white;
+        text-align: center;
+        padding: 10px 0;
+      }
+      .container {
+        padding: 20px;
+        display: none; /* Initially hidden until user logs in */
+      }
+      .view-container {
+        display: none;
+      }
+      .active {
+        display: block;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="header">
+      <h1>NGS Sample Management System</h1>
+    </div>
+
+    <!-- Login View -->
+    <div id="login">
+      <?!= include('Login'); ?>
+    </div>
+
+    <!-- Navigation buttons, shown after successful login -->
+    <div class="container">
+      <button id="btnRegistration" onclick="showView('registration')">Registration</button>
+      <button id="btnTokenGeneration" onclick="showView('tokenGeneration')">Token Generation</button>
+      <button id="btnDashboard" onclick="showView('dashboard')">Dashboard</button>
+      <button id="btnCreateTokens" onclick="showView('createTokens')">Create Tokens</button>
+      <button id="btnLabReceived" onclick="showView('labReceived')">Lab Received</button>
+      <button id="btnLogisticsBarcode" onclick="showView('logisticsBarcode')">Logistics Barcode Update</button>
+
+    </div>
+
+    <!-- Views -->
+    <div id="registration" class="view-container">
+      <?!= include('Registration'); ?>
+    </div>
+    <div id="tokenGeneration" class="view-container">
+      <?!= include('TokenGeneration'); ?>
+    </div>
+    <div id="dashboard" class="view-container">
+      <?!= include('Dashboard'); ?>
+    </div>
+    <div id="createTokens" class="view-container">
+      <?!= include('CreateTokens'); ?>
+    </div>
+    <div id="labReceived" class="view-container">
+      <?!= include('LabReceived'); ?>
+    </div>
+    <div id="logisticsBarcode" class="view-container">
+      <?!= include('LogisticsBarcode'); ?>
+    </div>
+
+    <script>
+      function showView(viewName) {
+        var views = document.getElementsByClassName('view-container');
+        for (var i = 0; i < views.length; i++) {
+          views[i].classList.remove('active');
+        }
+        document.getElementById(viewName).classList.add('active');
+      }
+
+      function handleLoginResponse(response) {
+        if(response.valid) {
+          // Hide login and show navigation buttons
+          document.getElementById('login').style.display = 'none';
+          document.getElementsByClassName('container')[0].style.display = 'block';
+
+          // Control access to views
+          controlViewAccess(response.user);
+        } else {
+          document.getElementById('loginError').textContent = 'Invalid UserID or PassKey';
+        }
+      }
+
+      function controlViewAccess(user) {
+        // Define view access
+        const access = {
+          'Hariesh': ['btnRegistration', 'btnDashboard', 'btnCreateTokens', 'btnLabReceived', 'btnLogisticsBarcode'],
+          'Amod': ['btnDashboard', 'btnCreateTokens', 'btnLabReceived', 'btnLogisticsBarcode'],
+          'Sender': ['btnRegistration', 'btnDashboard', 'btnLogisticsBarcode'],
+          'Doctor': ['btnRegistration', 'btnLogisticsBarcode'],
+          'LabOpsKochi': ['btnRegistration', 'btnDashboard', 'btnLabReceived', 'btnLogisticsBarcode'],
+          'LabOpsMumbai': ['btnRegistration', 'btnDashboard', 'btnLabReceived', 'btnLogisticsBarcode'],
+          'Doctor1': ['btnRegistration', 'btnLogisticsBarcode'],
+          'Doctor2': ['btnRegistration', 'btnLogisticsBarcode'],
+          'Doctor3': ['btnRegistration', 'btnLogisticsBarcode'],
+          'Doctor4': ['btnRegistration', 'btnLogisticsBarcode'],
+          'Doctor5': ['btnRegistration', 'btnLogisticsBarcode'],
+          'Doctor6': ['btnRegistration', 'btnLogisticsBarcode'],
+          'Doctor7': ['btnRegistration', 'btnLogisticsBarcode'],
+          'Doctor8': ['btnRegistration', 'btnLogisticsBarcode'],
+          'Doctor9': ['btnRegistration', 'btnLogisticsBarcode'],
+          'Doctor10': ['btnRegistration','btnLogisticsBarcode'],
+          'Doctor11': ['btnRegistration','btnLogisticsBarcode'],
+          'Doctor12': ['btnRegistration', 'btnLogisticsBarcode'],
+          'Doctor13': ['btnRegistration', 'btnLogisticsBarcode'],
+          'Doctor14': ['btnRegistration', 'btnLogisticsBarcode'],
+          'Doctor15': ['btnRegistration', 'btnLogisticsBarcode'],
+          'Doctor16': ['btnRegistration', 'btnLogisticsBarcode'],
+          'Doctor17': ['btnRegistration', 'btnLogisticsBarcode'],
+          'Doctor18': ['btnRegistration', 'btnLogisticsBarcode'],
+          'Doctor19': ['btnRegistration', 'btnLogisticsBarcode'],
+          'Doctor20': ['btnRegistration', 'btnLogisticsBarcode'],
+          'Doctor21': ['btnRegistration', 'btnLogisticsBarcode'],
+          'Doctor22': ['btnRegistration', 'btnLogisticsBarcode'],
+          'Doctor23': ['btnRegistration', 'btnLogisticsBarcode'],
+          'Doctor24': ['btnRegistration', 'btnLogisticsBarcode'],
+          'Doctor25': ['btnRegistration', 'btnLogisticsBarcode'],
+          'Sender1': ['btnRegistration', 'btnDashboard', 'btnLogisticsBarcode'],
+          'Sender2': ['btnRegistration', 'btnDashboard', 'btnLogisticsBarcode'],
+          'Sender3': ['btnRegistration', 'btnDashboard', 'btnLogisticsBarcode'],
+          'Sender4': ['btnRegistration', 'btnDashboard', 'btnLogisticsBarcode'],
+          'Sender5': ['btnRegistration', 'btnDashboard', 'btnLogisticsBarcode'],
+          'Sender6': ['btnRegistration', 'btnDashboard', 'btnLogisticsBarcode'],
+          'Sender7': ['btnRegistration', 'btnDashboard', 'btnLogisticsBarcode'],
+          'Sender8': ['btnRegistration', 'btnDashboard', 'btnLogisticsBarcode'],
+          'Sender9': ['btnRegistration', 'btnDashboard', 'btnLogisticsBarcode'],
+          'Sender10': ['btnRegistration', 'btnDashboard', 'btnLogisticsBarcode'],
+          'Sender11': ['btnRegistration', 'btnDashboard', 'btnLogisticsBarcode'],
+          'Sender12': ['btnRegistration', 'btnDashboard', 'btnLogisticsBarcode'],
+          'Sender13': ['btnRegistration', 'btnDashboard', 'btnLogisticsBarcode'],
+          'Sender14': ['btnRegistration', 'btnDashboard', 'btnLogisticsBarcode'],
+          'Sender15': ['btnRegistration', 'btnDashboard', 'btnLogisticsBarcode'],
+          'Sender16': ['btnRegistration', 'btnDashboard', 'btnLogisticsBarcode'],
+          'Sender17': ['btnRegistration', 'btnDashboard', 'btnLogisticsBarcode'],
+          'Sender18': ['btnRegistration', 'btnDashboard', 'btnLogisticsBarcode'],
+          'Sender19': ['btnRegistration', 'btnDashboard', 'btnLogisticsBarcode'],
+          'Sender20': ['btnRegistration', 'btnDashboard', 'btnLogisticsBarcode'],
+          'Sender21': ['btnRegistration', 'btnDashboard', 'btnLogisticsBarcode'],
+          'Sender22': ['btnRegistration', 'btnDashboard', 'btnLogisticsBarcode'],
+          'Sender23': ['btnRegistration', 'btnDashboard', 'btnLogisticsBarcode'],
+          'Sender24': ['btnRegistration', 'btnDashboard', 'btnLogisticsBarcode'],
+          'Sender25': ['btnRegistration', 'btnDashboard', 'btnLogisticsBarcode']
+
+        };
+
+        // Hide all buttons first
+        document.querySelectorAll('.container button').forEach(btn => btn.style.display = 'none');
+
+        // Show buttons based on user access
+        access[user].forEach(btnId => {
+          document.getElementById(btnId).style.display = 'inline-block';
+        });
+      }
+
+      function handleLoginError(error) {
+        document.getElementById('loginError').textContent = 'An error occurred during login';
+      }
+    </script>
+  </body>
+</html>

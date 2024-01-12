@@ -1,0 +1,57 @@
+<!-- LogisticsBarcode.html -->
+
+<div>
+  <h2>Logistics Barcode Update</h2>
+  <input type="text" id="searchField" placeholder="Search by barcode, name, etc.">
+  <button onclick="searchEntries()">Search</button>
+  <div id="logisticsList"></div>
+</div>
+
+<script>
+  function searchEntries() {
+    var searchTerm = document.getElementById('searchField').value;
+    google.script.run.withSuccessHandler(buildLogisticsList).getEntriesForLogisticsBarcodeUpdate(searchTerm);
+  }
+
+  function buildLogisticsList(entries) {
+    var container = document.getElementById('logisticsList');
+    container.innerHTML = '';
+    entries.forEach(function(entry) {
+      var card = document.createElement('div');
+      card.style.border = "1px solid #ddd";
+      card.style.marginBottom = "10px";
+      card.style.padding = "10px";
+      
+      var isEditable = !entry.logisticsBarcode; // Editable only if logistics barcode is not set
+
+      card.innerHTML = `
+        <h3>${entry.barcodeNumber}</h3>
+        <p><strong>Patient Name:</strong> ${entry.patientName}</p>
+        <p><strong>Patient Email:</strong> ${entry.patientEmail}</p>
+        <p><strong>Patient Phone Number:</strong> ${entry.patientPhone}</p>
+        <p><strong>Sender Name:</strong> ${entry.senderName}</p>
+        <p><strong>Collection Token Number:</strong> ${entry.tokenNumber}</p>
+        <p><strong>Courier Sent to Lab In:</strong> ${entry.courierLocation}</p>
+        <input type="text" placeholder="Logistics Barcode" value="${entry.logisticsBarcode || ''}" ${isEditable ? '' : 'disabled'}>
+        <button onclick="submitLogisticsBarcode(this, '${entry.barcodeNumber}')">Submit</button>
+      `;
+      container.appendChild(card);
+    });
+  }
+
+  function submitLogisticsBarcode(button, barcodeNumber) {
+    var logisticsField = button.previousElementSibling;
+    var logisticsBarcode = logisticsField.value;
+
+    if (logisticsField.disabled) {
+      alert('Logistics barcode cannot be modified.');
+      return;
+    }
+
+    google.script.run.updateLogisticsBarcode({barcodeNumber: barcodeNumber, logisticsBarcode: logisticsBarcode});
+    alert(`Logistics Barcode updated for ${barcodeNumber}`);
+  }
+
+  // Initial load
+  searchEntries();
+</script>
